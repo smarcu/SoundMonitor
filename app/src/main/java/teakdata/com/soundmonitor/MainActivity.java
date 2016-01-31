@@ -1,14 +1,12 @@
 package teakdata.com.soundmonitor;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -19,7 +17,10 @@ public class MainActivity extends AppCompatActivity {
     private SoundMonitor soundMonitor;
     private TextView statusTextView;
     private TextView soundLevelTextView;
+    private TextView soundMaxLevelTextView;
+    private TextView soundAvgLevelTextView;
     private ScheduledThreadPoolExecutor executor;
+    private SoundVolumeMonitor soundVolumeMonitor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +29,18 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        statusTextView = (TextView) findViewById(R.id.textView);
-        soundLevelTextView = (TextView) findViewById(R.id.textView2);
+        statusTextView = (TextView) findViewById(R.id.textViewStatus);
+        soundLevelTextView = (TextView) findViewById(R.id.textViewRealtimeValue);
+        soundMaxLevelTextView = (TextView) findViewById(R.id.textViewMaxValue);
+        soundAvgLevelTextView = (TextView) findViewById(R.id.textViewAvgValue);
 
+        Button resetButton = (Button) findViewById(R.id.buttonReset);
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                soundVolumeMonitor.reset();
+            }
+        });
     }
 
     @Override
@@ -53,7 +63,11 @@ public class MainActivity extends AppCompatActivity {
             }, 0, 1, TimeUnit.SECONDS);
         }
 
-        setStatus("monitoring started");
+        if (soundVolumeMonitor == null) {
+            soundVolumeMonitor = new SoundVolumeMonitor(60);
+        }
+
+        setStatus("monitoring");
     }
 
     @Override
@@ -66,14 +80,18 @@ public class MainActivity extends AppCompatActivity {
         executor.shutdownNow();
         executor = null;
 
-        setStatus("monitoring stopped");
+        setStatus("stopped");
     }
 
     private void updateLevel() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                soundLevelTextView.setText("" + soundMonitor.getAmplitude() + "dB");
+                double value = soundMonitor.getAmplitude();
+                soundLevelTextView.setText(String.format( "%.0f", value ));
+                soundVolumeMonitor.addVolume(value);
+                soundMaxLevelTextView.setText(String.format( "%.0f", soundVolumeMonitor.getMax()));
+                soundAvgLevelTextView.setText(String.format( "%.0f", soundVolumeMonitor.getAvg()));
             }
         });
     }

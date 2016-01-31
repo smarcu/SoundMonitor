@@ -12,11 +12,12 @@
     tools:context="teakdata.com.soundmonitor.MainActivity"
     tools:showIn="@layout/activity_main">
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
-        android:id="@+id/textView"
+        android:text="status"
+        android:id="@+id/textViewStatus"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
@@ -25,12 +26,104 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="0.0 dB"
-        android:id="@+id/textView2"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/textView"
+        android:text="0.0"
+        android:id="@+id/textViewRealtimeValue"
         android:textAlignment="center"
         android:typeface="normal"
-        android:textSize="77dp" />
+        android:textSize="77dp"
+        android:layout_below="@+id/textViewStatus"
+        android:layout_alignEnd="@+id/textViewMaxValue"
+        android:layout_column="0"
+        android:layout_span="0" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="dB"
+        android:id="@+id/textViewRelatimedBLabel"
+        android:textAlignment="center"
+        android:typeface="normal"
+        android:textSize="77dp"
+        android:layout_below="@+id/textViewStatus"
+        android:layout_toEndOf="@+id/textViewMaxValuedBLabel"
+        android:layout_column="21" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Max Value"
+        android:id="@+id/textViewMaxValueLabel"
+        android:layout_column="0"
+        android:layout_alignTop="@+id/textViewMaxValue"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="0.0"
+        android:id="@+id/textViewMaxValue"
+        android:layout_column="21"
+        android:textAlignment="textEnd"
+        android:layout_below="@+id/textViewRealtimeValue"
+        android:layout_toEndOf="@+id/textViewMaxValueLabel"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="dB"
+        android:id="@+id/textViewMaxValuedBLabel"
+        android:layout_alignTop="@+id/textViewMaxValue"
+        android:layout_toEndOf="@+id/textViewMaxValue"
+        android:layout_column="22" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Avg Value"
+        android:id="@+id/textViewAvgValueLabel"
+        android:layout_column="0"
+        android:layout_below="@+id/textViewMaxValueLabel"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="0.0"
+        android:id="@+id/textViewAvgValue"
+        android:layout_column="21"
+        android:textAlignment="textEnd"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:layout_alignTop="@+id/textViewAvgValueLabel"
+        android:layout_toStartOf="@+id/textViewMaxValuedBLabel" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="dB"
+        android:id="@+id/textViewAvgValuedbLabel"
+        android:layout_column="22"
+        android:layout_alignTop="@+id/textViewAvgValue"
+        android:layout_toStartOf="@+id/textViewRelatimedBLabel" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reset"
+        android:id="@+id/buttonReset"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="57dp" />
+
+
 </RelativeLayout>
