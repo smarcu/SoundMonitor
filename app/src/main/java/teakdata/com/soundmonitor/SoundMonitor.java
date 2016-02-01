@@ -44,15 +44,19 @@ public class SoundMonitor {
 
     public double getAmplitude() {
         short[] buffer = new short[minSize];
-        audioRecord.read(buffer, 0, minSize);
-        int max = 0;
-        for (short s : buffer) {
-            if (Math.abs(s) > max) {
-                max = Math.abs(s);
+        int totalRead = audioRecord.read(buffer, 0, minSize);
+        double max = 0;
+        for (int i=0; i < totalRead; i++) {
+            int val = Math.abs(buffer[i]);
+            if (max < val) {
+                max = val;
             }
         }
         return max;
     }
 
+    public double getDbLevel() {
+        return 20 * Math.log10(getAmplitude());
+    }
 
 }

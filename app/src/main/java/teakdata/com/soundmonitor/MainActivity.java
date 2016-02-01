@@ -60,11 +60,11 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
                     updateLevel();
                 }
-            }, 0, 1, TimeUnit.SECONDS);
+            }, 0, 200, TimeUnit.MILLISECONDS);
         }
 
         if (soundVolumeMonitor == null) {
-            soundVolumeMonitor = new SoundVolumeMonitor(60);
+            soundVolumeMonitor = new SoundVolumeMonitor(300);
         }
 
         setStatus("monitoring");
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                double value = soundMonitor.getAmplitude();
+                double value = soundMonitor.getDbLevel();
                 soundLevelTextView.setText(String.format( "%.0f", value ));
                 soundVolumeMonitor.addVolume(value);
                 soundMaxLevelTextView.setText(String.format( "%.0f", soundVolumeMonitor.getMax()));
